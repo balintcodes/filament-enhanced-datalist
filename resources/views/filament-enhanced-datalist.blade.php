@@ -26,7 +26,7 @@
 <x-dynamic-component
     :component="$getFieldWrapperView()"
     :field="$field"
-    x-data="{ value: 'test', showDatalist: false, highlightedValue: null }"
+    x-data="{ value: '{{ $getState() }}', showDatalist: false, highlightedValue: null }"
     x-on:click.outside="showDatalist = false"
 >
 
