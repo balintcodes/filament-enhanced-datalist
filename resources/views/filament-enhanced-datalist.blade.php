@@ -11,6 +11,16 @@
     $suffixActions = $getSuffixActions();
     $suffixIcon = $getSuffixIcon();
     $suffixLabel = $getSuffixLabel();
+
+    $chevronStyle = "
+        background-image: url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E\");
+        background-position: right .5rem center;
+        background-repeat: no-repeat;
+        background-size: 1.5rem 1.5rem;
+        padding-right: 2.5rem;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    ";
 @endphp
 
 <x-dynamic-component
@@ -67,15 +77,7 @@
             x-bind:aria-expanded="showDatalist.toString()"
             aria-controls="{{ $getId() }}-datalist"
             x-bind:aria-activedescendant="highlightedValue ?? ''"
-            style="
-                background-image: url(&#34;data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E&#34;);
-                background-position: right .5rem center;
-                background-repeat: no-repeat;
-                background-size: 1.5rem 1.5rem;
-                padding-right: 2.5rem;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            "
+            style="{{ $isChevronVisible() ? $chevronStyle : '' }}"
         >
         </x-filament::input>
 
@@ -90,7 +92,8 @@
                 role="listbox"
                 aria-labelledby="{{ $getId() }}"
             >
-                <div class="choices__item choices__item--choice choices__item--disabled">{{ __('filament-free-text-select::free-text-select.info') }}</div>
+                <div
+                    class="choices__item choices__item--choice choices__item--disabled">{{ __('filament-free-text-select::free-text-select.info') }}</div>
                 @foreach($getOptions() as $key => $option)
                     <div
                         x-data="{ hovered: false }"
