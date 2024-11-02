@@ -25,13 +25,13 @@ class FilamentEnhancedDatalist extends Field implements \Filament\Forms\Componen
 
     protected string $view = 'filament-enhanced-datalist::filament-enhanced-datalist';
 
-    protected bool|Closure $filterDatalist = true;
+    protected bool | Closure $filterDatalist = true;
 
-    protected bool|Closure $chevronVisible = true;
+    protected bool | Closure $chevronVisible = true;
 
-    protected string|null $infoLabel = null;
+    protected ?string $infoLabel = null;
 
-    public function filterDatalist(bool|Closure $condition = true): static
+    public function filterDatalist(bool | Closure $condition = true): static
     {
         $this->filterDatalist = $condition;
 
@@ -40,10 +40,10 @@ class FilamentEnhancedDatalist extends Field implements \Filament\Forms\Componen
 
     public function getFilterDatalist(): bool
     {
-        return (bool)$this->evaluate($this->filterDatalist);
+        return (bool) $this->evaluate($this->filterDatalist);
     }
 
-    public function chevronVisible(bool|Closure $condition = true): static
+    public function chevronVisible(bool | Closure $condition = true): static
     {
         $this->chevronVisible = $condition;
 
@@ -52,17 +52,17 @@ class FilamentEnhancedDatalist extends Field implements \Filament\Forms\Componen
 
     public function isChevronVisible(): bool
     {
-        return (bool)$this->evaluate($this->chevronVisible);
+        return (bool) $this->evaluate($this->chevronVisible);
     }
 
-    public function infoLabel(string|null|false $infoLabel = null): static
+    public function infoLabel(string | null | false $infoLabel = null): static
     {
         $this->infoLabel = $infoLabel;
 
         return $this;
     }
 
-    public function getInfoLabel(): string|null
+    public function getInfoLabel(): ?string
     {
         return $this->infoLabel;
     }
