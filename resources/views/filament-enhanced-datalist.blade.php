@@ -93,7 +93,7 @@
                 aria-labelledby="{{ $getId() }}"
             >
                 <div
-                    class="choices__item choices__item--choice choices__item--disabled">{{ __('filament-free-text-select::free-text-select.info') }}</div>
+                    class="choices__item choices__item--choice choices__item--disabled">{{ __('filament-enhanced-datalist::enhanced-datalist.info') }}</div>
                 @foreach($getOptions() as $key => $option)
                     <div
                         x-data="{ hovered: false }"
