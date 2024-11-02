@@ -47,7 +47,7 @@
                 ->class(['fi-fo-text-input overflow-hidden'])
         "
         style="overflow: visible !important;"
-        x-on:click="showDatalist = !showDatalist, $nextTick(() => { $refs.input.focus() });"
+        x-on:click="showDatalist = !showDatalist; $nextTick(() => { $refs.input.focus() });"
         class="relative"
     >
         <x-filament::input
@@ -97,14 +97,14 @@
                 @foreach($getOptions() as $key => $option)
                     <div
                         x-data="{ hovered: false }"
-                        x-on:mouseenter="hovered = true, highlightedValue = '{{ $option }}'"
-                        x-on:mouseleave="hovered = false, highlightedValue = null"
+                        x-on:mouseenter="hovered = true; highlightedValue = '{{ $option }}'"
+                        x-on:mouseleave="hovered = false; highlightedValue = null"
                         class="choices__item choices__item--choice choices__item--selectable"
                         x-bind:class="hovered ? 'is-highlighted' : ''"
                         @if($filterDatalist)
                             x-show="value === '' || '{{ $option }}'.toLowerCase().includes(value.toLowerCase())"
                         @endif
-                        x-on:click.stop="value = '{{ $option }}', showDatalist = false"
+                        x-on:click.stop="value = '{{ $option }}'; showDatalist = false"
                         role="option"
                         x-bind:aria-selected="hovered"
                     >{{ $option }}</div>
