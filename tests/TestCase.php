@@ -2,6 +2,7 @@
 
 namespace Balintxd\FilamentEnhancedDatalist\Tests;
 
+use Balintxd\FilamentEnhancedDatalist\FilamentEnhancedDatalistServiceProvider;
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
 use Filament\Actions\ActionsServiceProvider;
@@ -16,7 +17,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
-use Balintxd\FilamentEnhancedDatalist\FilamentEnhancedDatalistServiceProvider;
 
 class TestCase extends Orchestra
 {
