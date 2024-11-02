@@ -5,9 +5,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/balintxd/filament-enhanced-datalist/fix-php-code-styling.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/balintxd/filament-enhanced-datalist/actions?query=workflow%3A"Fix+PHP+code+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/balintxd/filament-enhanced-datalist.svg?style=flat-square)](https://packagist.org/packages/balintxd/filament-enhanced-datalist)
 
-
-
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+An implementation of text input fields with datalist that matches the looks of the FilamentPHP ecosystem.
 
 ## Installation
 
@@ -17,43 +15,22 @@ You can install the package via composer:
 composer require balintxd/filament-enhanced-datalist
 ```
 
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="filament-enhanced-datalist-migrations"
-php artisan migrate
-```
-
-You can publish the config file with:
-
-```bash
-php artisan vendor:publish --tag="filament-enhanced-datalist-config"
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="filament-enhanced-datalist-views"
-```
-
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
-
 ## Usage
 
 ```php
-$filamentEnhancedDatalist = new Balintxd\FilamentEnhancedDatalist();
-echo $filamentEnhancedDatalist->echoPhrase('Hello, Balintxd!');
-```
+include Balintxd\FilamentEnhancedDatalist;
 
-## Testing
-
-```bash
-composer test
+FilamentEnhancedDatalist::make('enhanced_datalist')
+    ->options(['One', 'Two', 'Three'])  // Options that should appear in the datalist
+    ->filterDatalist()                  // Whether the datalist should be filtered during typing
+    ->chevronVisible()                  // Whether the dropdown chevron should be visible
+    ->label('Enhanced datalist')        
+    ->minLength(2)
+    ->maxLength(16)
+    ->readyOnly()
+    ->prefix('Prefix')
+    ->postfix('Postfix')
+    ->placeholder('Choose a number');
 ```
 
 ## Changelog
