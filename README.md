@@ -24,6 +24,7 @@ FilamentEnhancedDatalist::make('enhanced_datalist')
     ->options(['One', 'Two', 'Three'])  // Options that should appear in the datalist
     ->filterDatalist()                  // Whether the datalist should be filtered during typing
     ->chevronVisible()                  // Whether the dropdown chevron should be visible
+    ->infoLabel('Select a number')      // Customize the information label on the top of the datalist
     ->label('Enhanced datalist')        
     ->minLength(2)
     ->maxLength(16)
