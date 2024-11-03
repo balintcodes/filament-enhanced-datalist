@@ -12,6 +12,7 @@ use Filament\Forms\Components\Concerns\HasPlaceholder;
 use Filament\Forms\Components\Contracts\HasAffixActions;
 use Filament\Forms\Components\Field;
 use Filament\Support\Concerns\HasExtraAlpineAttributes;
+use Illuminate\Contracts\Support\Arrayable;
 
 class FilamentEnhancedDatalist extends Field implements \Filament\Forms\Components\Contracts\CanBeLengthConstrained, HasAffixActions
 {
@@ -30,6 +31,13 @@ class FilamentEnhancedDatalist extends Field implements \Filament\Forms\Componen
     protected bool | Closure $chevronVisible = true;
 
     protected ?string $infoLabel = null;
+
+    public function options(array | Closure | string | Arrayable | null $options): static
+    {
+        $this->options = array_values($options);
+
+        return $this;
+    }
 
     public function filterDatalist(bool | Closure $condition = true): static
     {
@@ -65,10 +73,5 @@ class FilamentEnhancedDatalist extends Field implements \Filament\Forms\Componen
     public function getInfoLabel(): ?string
     {
         return $this->infoLabel;
-    }
-
-    protected function setUp(): void
-    {
-        parent::setUp();
     }
 }

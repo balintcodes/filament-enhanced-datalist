@@ -13,6 +13,7 @@
     $suffixLabel = $getSuffixLabel();
     $infoLabel = $getInfoLabel();
     $id = $getId();
+    $options = $getOptions();
 
     $chevronStyle = "
         background-image: url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E\");
@@ -28,8 +29,9 @@
 <x-dynamic-component
     :component="$getFieldWrapperView()"
     :field="$field"
-    x-data="{ value: '{{ $getState() }}', showDatalist: false, highlightedValue: null }"
+    x-data="{ value: '{{ $getState() }}', showDatalist: false, highlightedValue: null, highlightedIndex: null }"
     x-on:click.outside="showDatalist = false"
+    x-on:keydown.esc="showDatalist = false"
 >
 
     <x-filament::input.wrapper
@@ -48,9 +50,9 @@
             \Filament\Support\prepare_inherited_attributes($getExtraAttributeBag())
                 ->class(['fi-fo-text-input overflow-hidden'])
         "
-        style="overflow: visible !important;"
-        x-on:click="showDatalist = !showDatalist; $nextTick(() => { $refs.input.focus() });"
         class="relative"
+        style="overflow: visible !important;"
+        x-on:click="showDatalist = !showDatalist"
     >
         <x-filament::input
             :attributes="
@@ -69,25 +71,30 @@
                         $applyStateBindingModifiers('wire:model') => $getStatePath()
                     ], escape: false)
             "
-            x-ref="input"
-            x-model="value"
-            x-on:wire:click="showDatalist = true"
-            x-on:keyup="showDatalist = true"
+            style="{{ $isChevronVisible() ? $chevronStyle : '' }}"
             autocomplete="off"
             role="combobox"
             aria-autocomplete="list"
-            x-bind:aria-expanded="showDatalist.toString()"
             aria-controls="{{ $id }}-datalist"
+            x-model="value"
+            x-data="datalistNavigation()"
+            x-on:wire:click="showDatalist = true"
+            x-on:keydown="showDatalist = true;"
+            x-on:keyup.down="highlightedIndex = getNextIndex(highlightedIndex)"
+            x-on:keyup.up="highlightedIndex = getPrevIndex(highlightedIndex)"
+            x-on:keydown.prevent.enter="value = getHighlightedValue(highlightedIndex); showDatalist = false;"
+            x-on:blur="showDatalist = false"
+            x-bind:aria-expanded="showDatalist.toString()"
             x-bind:aria-activedescendant="highlightedValue ?? ''"
-            style="{{ $isChevronVisible() ? $chevronStyle : '' }}"
         >
         </x-filament::input>
 
         <div
             class="choices__list choices__list--dropdown absolute"
-            x-bind:class="showDatalist ? 'is-active' : ''"
             id="{{ $id }}-datalist"
             style="left: 0;"
+            x-bind:class="showDatalist ? 'is-active' : ''"
+            x-on:mousedown.prevent
         >
             <div
                 class="choices__list text-lg sm:text-sm"
@@ -101,19 +108,18 @@
                         {{ $infoLabel }}
                     @endif
                 </div>
-                @foreach($getOptions() as $key => $option)
+                @foreach($options as $key => $option)
                     <div
-                        x-data="{ hovered: false }"
-                        x-on:mouseenter="hovered = true; highlightedValue = '{{ $option }}'"
-                        x-on:mouseleave="hovered = false; highlightedValue = null"
                         class="choices__item choices__item--choice choices__item--selectable"
-                        x-bind:class="hovered ? 'is-highlighted' : ''"
+                        role="option"
+                        x-on:mouseenter="highlightedValue = '{{ $option }}'; highlightedIndex = '{{ $key }}';"
+                        x-on:mouseleave="highlightedValue = null; highlightedIndex = null;"
+                        x-bind:class="'{{ $key }}' === highlightedIndex ? 'is-highlighted' : ''"
                         @if($filterDatalist)
                             x-show="value === '' || '{{ $option }}'.toLowerCase().includes(value.toLowerCase())"
                         @endif
                         x-on:click.stop="value = '{{ $option }}'; showDatalist = false"
-                        role="option"
-                        x-bind:aria-selected="hovered"
+                        x-bind:aria-selected="'{{ $key }}' === highlightedIndex"
                     >{{ $option }}</div>
                 @endforeach
             </div>
@@ -122,3 +128,28 @@
     </x-filament::input.wrapper>
 
 </x-dynamic-component>
+
+@once
+    <script>
+        function datalistNavigation() {
+            const opts = @json($options, JSON_THROW_ON_ERROR);
+            const keys = Object.keys(opts).map(Number);
+            return {
+                getNextIndex(currKey) {
+                    const currKeyPos = keys.indexOf(currKey);
+                    const nextKeyPos = (currKeyPos + 1) % keys.length;
+                    return keys[nextKeyPos];
+                },
+                getPrevIndex(currKey) {
+                    const currKeyPos = keys.indexOf(currKey);
+                    const prevKeyPos = (currKeyPos - 1 + keys.length) % keys.length;
+                    return keys[prevKeyPos];
+                },
+                getHighlightedValue(currKey) {
+                    const currKeyPos = keys.indexOf(currKey);
+                    return opts[keys[currKeyPos]];
+                }
+            };
+        }
+    </script>
+@endonce
