@@ -12,6 +12,7 @@
     $suffixIcon = $getSuffixIcon();
     $suffixLabel = $getSuffixLabel();
     $infoLabel = $getInfoLabel();
+    $id = $getId();
 
     $chevronStyle = "
         background-image: url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E\");
@@ -61,7 +62,7 @@
                         'readonly' => $isReadOnly(),
                         'placeholder' => $getPlaceholder(),
                         'disabled' => $isDisabled,
-                        'id' => $getId(),
+                        'id' => $id,
                         'required' => $isRequired() && (! $isConcealed),
                         'inlinePrefix' => $isPrefixInline && (count($prefixActions) || $prefixIcon || filled($prefixLabel)),
                         'inlineSuffix' => $isSuffixInline && (count($suffixActions) || $suffixIcon || filled($suffixLabel)),
@@ -76,7 +77,7 @@
             role="combobox"
             aria-autocomplete="list"
             x-bind:aria-expanded="showDatalist.toString()"
-            aria-controls="{{ $getId() }}-datalist"
+            aria-controls="{{ $id }}-datalist"
             x-bind:aria-activedescendant="highlightedValue ?? ''"
             style="{{ $isChevronVisible() ? $chevronStyle : '' }}"
         >
@@ -85,13 +86,13 @@
         <div
             class="choices__list choices__list--dropdown absolute"
             x-bind:class="showDatalist ? 'is-active' : ''"
-            id="{{ $getId() }}-datalist"
+            id="{{ $id }}-datalist"
             style="left: 0;"
         >
             <div
                 class="choices__list text-lg sm:text-sm"
                 role="listbox"
-                aria-labelledby="{{ $getId() }}"
+                aria-labelledby="{{ $id }}"
             >
                 <div class="choices__item choices__item--choice choices__item--disabled">
                     @if($infoLabel === null)
