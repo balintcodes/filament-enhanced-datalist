@@ -4,7 +4,11 @@
     "keywords": [
         "balintxd",
         "laravel",
-        "filament-enhanced-datalist"
+        "filament-enhanced-datalist",
+        "filamentphp",
+        "filament-form",
+        "filament-plugins",
+        "datalist"
     ],
     "homepage": "https://github.com/balintxd/filament-enhanced-datalist",
     "support": {
