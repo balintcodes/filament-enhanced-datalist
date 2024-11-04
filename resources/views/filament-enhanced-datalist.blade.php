@@ -135,11 +135,17 @@
             const keys = Object.keys(opts).map(String);
             return {
                 getNextIndex(currKey) {
+                    if (currKey === null || currKey === undefined) {
+                        return keys[0];
+                    }
                     const currKeyPos = keys.indexOf(currKey);
                     const nextKeyPos = (currKeyPos + 1) % keys.length;
                     return keys[nextKeyPos];
                 },
                 getPrevIndex(currKey) {
+                    if (currKey === null || currKey === undefined) {
+                        return keys[keys.length - 1];
+                    }
                     const currKeyPos = keys.indexOf(currKey);
                     const prevKeyPos = (currKeyPos - 1 + keys.length) % keys.length;
                     return keys[prevKeyPos];
