@@ -113,12 +113,12 @@
                         role="option"
                         x-on:mouseenter="highlightedValue = '{{ $option }}'; highlightedIndex = '{{ $key }}';"
                         x-on:mouseleave="highlightedValue = null; highlightedIndex = null;"
-                        x-bind:class="'{{ $key }}' === highlightedIndex ? 'is-highlighted' : ''"
+                        x-bind:class="'{{ $key }}' === String(highlightedIndex) ? 'is-highlighted' : ''"
                         @if($filterDatalist)
                             x-show="value === '' || '{{ $option }}'.toLowerCase().includes(value.toLowerCase())"
                         @endif
                         x-on:click.stop="value = '{{ $option }}'; showDatalist = false"
-                        x-bind:aria-selected="'{{ $key }}' === highlightedIndex"
+                        x-bind:aria-selected="'{{ $key }}' === String(highlightedIndex)"
                     >{{ $option }}</div>
                 @endforeach
             </div>
@@ -132,7 +132,7 @@
     <script>
         function datalistNavigation() {
             const opts = @json($options, JSON_THROW_ON_ERROR);
-            const keys = Object.keys(opts).map(Number);
+            const keys = Object.keys(opts).map(String);
             return {
                 getNextIndex(currKey) {
                     const currKeyPos = keys.indexOf(currKey);
