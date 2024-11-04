@@ -52,7 +52,6 @@
         "
         class="relative"
         style="overflow: visible !important;"
-        x-on:click="showDatalist = !showDatalist"
     >
         <x-filament::input
             :attributes="
@@ -78,7 +77,7 @@
             aria-controls="{{ $id }}-datalist"
             x-model="value"
             x-data="datalistNavigation()"
-            x-on:wire:click="showDatalist = true"
+            x-on:click="showDatalist = true"
             x-on:keydown="showDatalist = true;"
             x-on:keyup.down="highlightedIndex = getNextIndex(highlightedIndex)"
             x-on:keyup.up="highlightedIndex = getPrevIndex(highlightedIndex)"
