@@ -117,7 +117,7 @@
                         @if($filterDatalist)
                             x-show="value === '' || '{{ $option }}'.toLowerCase().includes(value.toLowerCase())"
                         @endif
-                        x-on:click.stop="value = '{{ $option }}'; showDatalist = false"
+                        x-on:click.stop="value = '{{ $option }}'; showDatalist = false; $wire.$set('{{ $getStatePath(true) }}', '{{ $option }}');"
                         x-bind:aria-selected="'{{ $key }}' === String(highlightedIndex)"
                     >{{ $option }}</div>
                 @endforeach
