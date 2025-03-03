@@ -28,7 +28,7 @@ FilamentEnhancedDatalist::make('enhanced_datalist')
     ->label('Enhanced datalist')        
     ->minLength(2)
     ->maxLength(16)
-    ->readyOnly()
+    ->readOnly()
     ->prefix('Prefix')
     ->postfix('Postfix')
     ->placeholder('Choose a number');
