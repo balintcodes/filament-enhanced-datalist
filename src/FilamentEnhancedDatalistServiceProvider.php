@@ -1,6 +1,6 @@
 <?php
 
-namespace Balintxd\FilamentEnhancedDatalist;
+namespace Balintcodes\FilamentEnhancedDatalist;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;

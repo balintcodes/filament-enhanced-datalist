@@ -4,7 +4,7 @@ All notable changes to `filament-enhanced-datalist` will be documented in this f
 
 ## v1.1.2 - 2024-11-27
 
-**Full Changelog**: https://github.com/balintxd/filament-enhanced-datalist/compare/v1.1.1...v1.1.2
+**Full Changelog**: https://github.com/balintcodes/filament-enhanced-datalist/compare/v1.1.1...v1.1.2
 
 ## v1.1.1 - 2024-11-04
 

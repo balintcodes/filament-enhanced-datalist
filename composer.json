@@ -1,8 +1,8 @@
 {
-    "name": "balintxd/filament-enhanced-datalist",
+    "name": "balintcodes/filament-enhanced-datalist",
     "description": "An enhanced version of text input with datalist for FilamentPHP",
     "keywords": [
-        "balintxd",
+        "balintcodes",
         "laravel",
         "filament-enhanced-datalist",
         "filamentphp",
@@ -10,10 +10,10 @@
         "filament-plugins",
         "datalist"
     ],
-    "homepage": "https://github.com/balintxd/filament-enhanced-datalist",
+    "homepage": "https://github.com/balintcodes/filament-enhanced-datalist",
     "support": {
-        "issues": "https://github.com/balintxd/filament-enhanced-datalist/issues",
-        "source": "https://github.com/balintxd/filament-enhanced-datalist"
+        "issues": "https://github.com/balintcodes/filament-enhanced-datalist/issues",
+        "source": "https://github.com/balintcodes/filament-enhanced-datalist"
     },
     "license": "MIT",
     "authors": [
@@ -38,12 +38,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Balintxd\\FilamentEnhancedDatalist\\": "src/"
+            "Balintcodes\\FilamentEnhancedDatalist\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Balintxd\\FilamentEnhancedDatalist\\Tests\\": "tests/"
+            "Balintcodes\\FilamentEnhancedDatalist\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -62,7 +62,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Balintxd\\FilamentEnhancedDatalist\\FilamentEnhancedDatalistServiceProvider"
+                "Balintcodes\\FilamentEnhancedDatalist\\FilamentEnhancedDatalistServiceProvider"
             ],
             "aliases": {
             }

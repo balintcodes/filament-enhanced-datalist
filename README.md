@@ -1,9 +1,9 @@
 # An enhanced version of text input with datalist for FilamentPHP
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/balintxd/filament-enhanced-datalist.svg?style=flat-square)](https://packagist.org/packages/balintxd/filament-enhanced-datalist)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/balintxd/filament-enhanced-datalist/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/balintxd/filament-enhanced-datalist/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/balintxd/filament-enhanced-datalist/fix-php-code-styling.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/balintxd/filament-enhanced-datalist/actions?query=workflow%3A"Fix+PHP+code+styling"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/balintxd/filament-enhanced-datalist.svg?style=flat-square)](https://packagist.org/packages/balintxd/filament-enhanced-datalist)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/balintcodes/filament-enhanced-datalist.svg?style=flat-square)](https://packagist.org/packages/balintcodes/filament-enhanced-datalist)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/balintcodes/filament-enhanced-datalist/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/balintcodes/filament-enhanced-datalist/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/balintcodes/filament-enhanced-datalist/fix-php-code-styling.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/balintcodes/filament-enhanced-datalist/actions?query=workflow%3A"Fix+PHP+code+styling"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/balintcodes/filament-enhanced-datalist.svg?style=flat-square)](https://packagist.org/packages/balintcodes/filament-enhanced-datalist)
 
 An implementation of text input fields with datalist that matches the looks of the FilamentPHP ecosystem.
 
@@ -12,13 +12,13 @@ An implementation of text input fields with datalist that matches the looks of t
 You can install the package via composer:
 
 ```bash
-composer require balintxd/filament-enhanced-datalist
+composer require balintcodes/filament-enhanced-datalist
 ```
 
 ## Usage
 
 ```php
-include Balintxd\FilamentEnhancedDatalist;
+include Balintcodes\FilamentEnhancedDatalist;
 
 FilamentEnhancedDatalist::make('enhanced_datalist')
     ->options(['One', 'Two', 'Three'])  // Options that should appear in the datalist
@@ -48,7 +48,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [Bálint Nagy](https://github.com/balintxd)
+- [Bálint Nagy](https://github.com/balintcodes)
 - [All Contributors](../../contributors)
 
 ## License

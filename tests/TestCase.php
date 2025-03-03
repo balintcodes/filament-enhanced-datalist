@@ -1,8 +1,8 @@
 <?php
 
-namespace Balintxd\FilamentEnhancedDatalist\Tests;
+namespace Balintcodes\FilamentEnhancedDatalist\Tests;
 
-use Balintxd\FilamentEnhancedDatalist\FilamentEnhancedDatalistServiceProvider;
+use Balintcodes\FilamentEnhancedDatalist\FilamentEnhancedDatalistServiceProvider;
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
 use Filament\Actions\ActionsServiceProvider;
@@ -32,7 +32,7 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Balintxd\\FilamentEnhancedDatalist\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
+            fn (string $modelName) => 'Balintcodes\\FilamentEnhancedDatalist\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
         );
     }
 

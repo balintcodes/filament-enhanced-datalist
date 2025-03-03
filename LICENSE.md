@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (c) balintxd <hello@nbalint.hu>
+Copyright (c) balintcodes <hello@nbalint.hu>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

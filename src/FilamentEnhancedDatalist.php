@@ -1,6 +1,6 @@
 <?php
 
-namespace Balintxd\FilamentEnhancedDatalist;
+namespace Balintcodes\FilamentEnhancedDatalist;
 
 use Closure;
 use Filament\Forms\Components\Concerns\CanBeLengthConstrained;

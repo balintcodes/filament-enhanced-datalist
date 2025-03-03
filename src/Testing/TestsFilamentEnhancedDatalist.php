@@ -1,6 +1,6 @@
 <?php
 
-namespace Balintxd\FilamentEnhancedDatalist\Testing;
+namespace Balintcodes\FilamentEnhancedDatalist\Testing;
 
 use Livewire\Features\SupportTesting\Testable;
 
