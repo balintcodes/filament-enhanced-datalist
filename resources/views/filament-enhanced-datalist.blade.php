@@ -14,6 +14,7 @@
     $infoLabel = $getInfoLabel();
     $id = $getId();
     $options = $getOptions();
+    $isReadOnly = $isReadOnly();
 
     $chevronStyle = "
         background-image: url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E\");
@@ -29,9 +30,9 @@
 <x-dynamic-component
     :component="$getFieldWrapperView()"
     :field="$field"
-    x-data="{ value: '{{ $getState() }}', showDatalist: false, highlightedValue: null, highlightedIndex: null }"
-    x-on:click.outside="showDatalist = false"
-    x-on:keydown.esc="showDatalist = false"
+    x-data="datalist()"
+    x-on:click.outside="toggleDatalist(false)"
+    x-on:keydown.esc="toggleDatalist(false)"
 >
 
     <x-filament::input.wrapper
@@ -60,7 +61,7 @@
                     ->merge([
                         'maxlength' => (! $isConcealed) ? $getMaxLength() : null,
                         'minlength' => (! $isConcealed) ? $getMinLength() : null,
-                        'readonly' => $isReadOnly(),
+                        'readonly' => $isReadOnly,
                         'placeholder' => $getPlaceholder(),
                         'disabled' => $isDisabled,
                         'id' => $id,
@@ -70,19 +71,19 @@
                         $applyStateBindingModifiers('wire:model') => $getStatePath()
                     ], escape: false)
             "
-            style="{{ $isChevronVisible() ? $chevronStyle : '' }}"
+            style="{{ $isChevronVisible() && !$isReadOnly ? $chevronStyle : '' }}"
             autocomplete="off"
             role="combobox"
             aria-autocomplete="list"
             aria-controls="{{ $id }}-datalist"
             x-model="value"
             x-data="datalistNavigation()"
-            x-on:click="showDatalist = true"
-            x-on:keydown="showDatalist = true;"
+            x-on:click="toggleDatalist(true)"
+            x-on:keydown="toggleDatalist(true);"
             x-on:keyup.down="highlightedIndex = getNextIndex(highlightedIndex)"
             x-on:keyup.up="highlightedIndex = getPrevIndex(highlightedIndex)"
-            x-on:keydown.prevent.enter="value = getHighlightedValue(highlightedIndex); showDatalist = false;"
-            x-on:blur="showDatalist = false"
+            x-on:keydown.prevent.enter="setValue(getHighlightedValue(highlightedIndex)); toggleDatalist(false);"
+            x-on:blur="toggleDatalist(false)"
             x-bind:aria-expanded="showDatalist.toString()"
             x-bind:aria-activedescendant="highlightedValue ?? ''"
         >
@@ -117,7 +118,7 @@
                         @if($filterDatalist)
                             x-show="value === '' || '{{ $option }}'.toLowerCase().includes(value.toLowerCase())"
                         @endif
-                        x-on:click.stop="value = '{{ $option }}'; showDatalist = false; $wire.$set('{{ $getStatePath(true) }}', '{{ $option }}');"
+                        x-on:click.stop="value = '{{ $option }}'; toggleDatalist(false); $wire.$set('{{ $getStatePath(true) }}', '{{ $option }}');"
                         x-bind:aria-selected="'{{ $key }}' === String(highlightedIndex)"
                     >{{ $option }}</div>
                 @endforeach
@@ -130,9 +131,32 @@
 
 @once
     <script>
+        function datalist() {
+            const readOnly = {{ $isReadOnly ? 'true' : 'false' }};
+
+            return {
+                value: '{{ $getState() }}',
+                showDatalist: false,
+                highlightedValue: null,
+                highlightedIndex: null,
+
+                toggleDatalist(show) {
+                    if (!readOnly) {
+                        this.showDatalist = show;
+                    }
+                },
+                setValue(value) {
+                    if (!readOnly) {
+                        this.value = value;
+                    }
+                }
+            }
+        }
+
         function datalistNavigation() {
             const opts = @json($options, JSON_THROW_ON_ERROR);
             const keys = Object.keys(opts).map(String);
+
             return {
                 getNextIndex(currKey) {
                     if (currKey === null || currKey === undefined) {
