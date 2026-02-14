@@ -14,6 +14,7 @@
     $infoLabel = $getInfoLabel();
     $id = $getId();
     $options = $getOptions();
+    $optionsJson = json_encode($options, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT);
     $isReadOnly = $isReadOnly();
 
     $chevronStyle = "
@@ -30,7 +31,34 @@
 <x-dynamic-component
     :component="$getFieldWrapperView()"
     :field="$field"
-    x-data="datalist()"
+    x-data="{
+        value: '{{ $getState() }}',
+        showDatalist: false,
+        highlightedValue: null,
+        highlightedIndex: null,
+        opts: {!! $optionsJson !!},
+        keys: Object.keys({!! $optionsJson !!}).map(String),
+        readOnly: {{ $isReadOnly ? 'true' : 'false' }},
+        toggleDatalist(show) {
+            if (!this.readOnly) this.showDatalist = show;
+        },
+        setValue(val) {
+            if (!this.readOnly) this.value = val;
+        },
+        getNextIndex(currKey) {
+            if (currKey === null || currKey === undefined) return this.keys[0];
+            const pos = this.keys.indexOf(currKey);
+            return this.keys[(pos + 1) % this.keys.length];
+        },
+        getPrevIndex(currKey) {
+            if (currKey === null || currKey === undefined) return this.keys[this.keys.length - 1];
+            const pos = this.keys.indexOf(currKey);
+            return this.keys[(pos - 1 + this.keys.length) % this.keys.length];
+        },
+        getHighlightedValue(currKey) {
+            return this.opts[currKey];
+        }
+    }"
     x-on:click.outside="toggleDatalist(false)"
     x-on:keydown.esc="toggleDatalist(false)"
 >
@@ -51,7 +79,7 @@
             \Filament\Support\prepare_inherited_attributes($getExtraAttributeBag())
                 ->class(['fi-fo-text-input overflow-hidden'])
         "
-        class="relative"
+        class="fi-enhanced-datalist-wrap relative"
         style="overflow: visible !important;"
     >
         <x-filament::input
@@ -77,9 +105,8 @@
             aria-autocomplete="list"
             aria-controls="{{ $id }}-datalist"
             x-model="value"
-            x-data="datalistNavigation()"
             x-on:click="toggleDatalist(true)"
-            x-on:keydown="toggleDatalist(true);"
+            x-on:keydown="toggleDatalist(true)"
             x-on:keyup.down="highlightedIndex = getNextIndex(highlightedIndex)"
             x-on:keyup.up="highlightedIndex = getPrevIndex(highlightedIndex)"
             x-on:keydown.prevent.enter="setValue(getHighlightedValue(highlightedIndex)); toggleDatalist(false);"
@@ -90,18 +117,19 @@
         </x-filament::input>
 
         <div
-            class="choices__list choices__list--dropdown absolute"
+            class="fi-dropdown-panel fi-scrollable fi-enhanced-datalist"
             id="{{ $id }}-datalist"
-            style="left: 0;"
-            x-bind:class="showDatalist ? 'is-active' : ''"
+            role="listbox"
+            x-show="showDatalist"
+            x-cloak
             x-on:mousedown.prevent
         >
             <div
-                class="choices__list text-lg sm:text-sm"
+                class="fi-dropdown-list text-lg sm:text-sm"
                 role="listbox"
                 aria-labelledby="{{ $id }}"
             >
-                <div class="choices__item choices__item--choice choices__item--disabled">
+                <div class="fi-dropdown-list-item fi-select-input-option" disabled>
                     @if($infoLabel === null)
                         {{ __('filament-enhanced-datalist::enhanced-datalist.info') }}
                     @else
@@ -110,8 +138,9 @@
                 </div>
                 @foreach($options as $key => $option)
                     <div
-                        class="choices__item choices__item--choice choices__item--selectable"
+                        class="fi-dropdown-list-item fi-select-input-option"
                         role="option"
+                        tabindex="0"
                         x-on:mouseenter="highlightedValue = '{{ $option }}'; highlightedIndex = '{{ $key }}';"
                         x-on:mouseleave="highlightedValue = null; highlightedIndex = null;"
                         x-bind:class="'{{ $key }}' === String(highlightedIndex) ? 'is-highlighted' : ''"
@@ -128,57 +157,3 @@
     </x-filament::input.wrapper>
 
 </x-dynamic-component>
-
-@once
-    <script>
-        function datalist() {
-            const readOnly = {{ $isReadOnly ? 'true' : 'false' }};
-
-            return {
-                value: '{{ $getState() }}',
-                showDatalist: false,
-                highlightedValue: null,
-                highlightedIndex: null,
-
-                toggleDatalist(show) {
-                    if (!readOnly) {
-                        this.showDatalist = show;
-                    }
-                },
-                setValue(value) {
-                    if (!readOnly) {
-                        this.value = value;
-                    }
-                }
-            }
-        }
-
-        function datalistNavigation() {
-            const opts = @json($options, JSON_THROW_ON_ERROR);
-            const keys = Object.keys(opts).map(String);
-
-            return {
-                getNextIndex(currKey) {
-                    if (currKey === null || currKey === undefined) {
-                        return keys[0];
-                    }
-                    const currKeyPos = keys.indexOf(currKey);
-                    const nextKeyPos = (currKeyPos + 1) % keys.length;
-                    return keys[nextKeyPos];
-                },
-                getPrevIndex(currKey) {
-                    if (currKey === null || currKey === undefined) {
-                        return keys[keys.length - 1];
-                    }
-                    const currKeyPos = keys.indexOf(currKey);
-                    const prevKeyPos = (currKeyPos - 1 + keys.length) % keys.length;
-                    return keys[prevKeyPos];
-                },
-                getHighlightedValue(currKey) {
-                    const currKeyPos = keys.indexOf(currKey);
-                    return opts[keys[currKeyPos]];
-                }
-            };
-        }
-    </script>
-@endonce

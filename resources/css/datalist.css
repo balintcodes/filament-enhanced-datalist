@@ -1,0 +1,21 @@
+@layer components {
+  .fi-enhanced-datalist-wrap > .fi-input-wrp-content-ctn {
+    position: relative;
+  }
+  :scope .fi-enhanced-datalist {
+    width: 100%;
+    max-width: none !important;
+    max-height: 300px;
+  }
+  .fi-enhanced-datalist .fi-dropdown-list-item:not(.fi-disabled):not([disabled]).is-highlighted {
+      background-color:var(--gray-50)
+  }
+  .fi-enhanced-datalist .fi-dropdown-list-item:not(.fi-disabled):not([disabled]):where(.dark,.dark *).is-highlighted {
+      background-color:#ffffff0d
+  }
+  @supports (color:color-mix(in lab,red,red)) {
+      .fi-enhanced-datalist .fi-dropdown-list-item:not(.fi-disabled):not([disabled]):where(.dark,.dark *).is-highlighted {
+          background-color:color-mix(in oklab,var(--color-white)5%,transparent)
+      }
+  }
+}
